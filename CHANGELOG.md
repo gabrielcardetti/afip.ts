@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 3.3.0 - 2026-10-12
+
+### Fixed
+
+- Requests to ARCA failed on Node 24+ (OpenSSL 3.5) with `dh key too small`: WSFE still negotiates TLS with a
+  1024-bit Diffie-Hellman key. The library now sends its requests through its own HTTPS agent with
+  `DEFAULT@SECLEVEL=1`, without touching the host application's global agent.
+
+### Added
+
+- `httpsAgent` in the context, to use a custom HTTPS agent (proxies, custom TLS) for the requests to ARCA.
+- `getArcaHttpsAgent` and `ARCA_TLS_CIPHERS` exports.
+
 ## 3.2.2 - 2024-06-19
 
 ## 3.2.1 - 2024-06-04

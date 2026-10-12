@@ -1,3 +1,4 @@
+import type { Agent as HttpsAgent } from "https";
 import { IOptions } from "soap";
 import { ILoginCmsReturn } from "./soap/interfaces/LoginCMSService/LoginCms";
 import { ServiceSoapTypes } from "./soap/interfaces/Service/ServiceSoap";
@@ -26,6 +27,8 @@ export type WSAuthTokens = {
 export type SoapClientParams = {
   wsdl: WsdlPathEnum;
   options?: IOptions;
+  /** HTTPS agent for the requests to ARCA. Defaults to the library's agent (see `getArcaHttpsAgent`). */
+  httpsAgent?: HttpsAgent;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -99,6 +102,12 @@ export type Context = {
    * The path of the auth obj if the package is auto managed
    */
   ticketPath?: string;
+
+  /**
+   * HTTPS agent for the requests to ARCA (proxies, custom TLS). By default the library uses its own agent,
+   * which accepts the 1024-bit DH key ARCA's services still use (rejected by OpenSSL 3.5 / Node 24+).
+   */
+  httpsAgent?: HttpsAgent;
 };
 
 export interface IVoucher {

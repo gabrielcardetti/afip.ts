@@ -25,6 +25,7 @@ export class AfipAuth {
   private async getAuthClient() {
     return SoapClientFacade.create<ILoginCmsSoap>({
       wsdl: WsdlPathEnum.WSAA,
+      httpsAgent: this.context.httpsAgent,
       options: {
         disableCache: true,
         endpoint: this.context.production
