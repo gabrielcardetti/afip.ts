@@ -16,6 +16,7 @@ const instancia = new Afip(Contexto);
   - `credentials` <small>(WSAuthTokens)</small>: Un objeto de tipo WSAuthTokens ([Ver](https://github.com/valiulab/afip.ts/blob/main/src/auth/types.ts#L5)). Aquí es donde se asignan los tokens de autenticación si ya se tienen guardados.
   - `handleTicket` <small>(booleano)</small>: Flag que indica si los tickets de autenticación son gestionados automáticamente por el paquete o si serán proporcionados por el desarrollador (más adelante se explicará cómo hacer inicio de sesión y luego pasar los tokens antes de llamar al servicio web deseado). Esto es útil cuando se desea utilizar el paquete en una función `lambda` o en algun lugar que no se tenga almacenamiento.
   - `ticketPath` <small>(cadena)</small>: La ruta preferida donde se desean guardar los tokens obtenidos del servicio WSAA si no se desea utilizar la carpeta predeterminada.
+  - `httpsAgent` <small>(https.Agent)</small>: Agente HTTPS para los pedidos a ARCA (por ejemplo, para salir por un proxy). Si no se indica, el paquete usa su propio agente, que acepta la clave Diffie-Hellman de 1024 bits que todavía usan los servicios de ARCA y que Node 24+ (OpenSSL 3.5) rechaza con `dh key too small`. Si pasás tu propio agente y usás Node 24+, configurale `ciphers: ARCA_TLS_CIPHERS` (exportado por el paquete). Desde 3.3.0 el paquete ya no usa el agente global de Node (`https.globalAgent`).
 
 <br/>
 Context Type:
@@ -66,6 +67,12 @@ type Context = {
    * The path of the auth obj if the package is auto managed
    */
   ticketPath?: string;
+
+  /**
+   * HTTPS agent for the requests to ARCA (proxies, custom TLS). By default the library uses its own agent,
+   * which accepts the 1024-bit DH key ARCA's services still use (rejected by OpenSSL 3.5 / Node 24+).
+   */
+  httpsAgent?: Agent;
 };
 ```
 

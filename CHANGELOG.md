@@ -5,20 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 3.3.0 - Unreleased
 
-## 3.3.0 - 2026-10-12
+Pre-release published as `3.3.0-rc.0` under the `next` dist-tag (`npm install @cafecafe/afip.ts@next`).
 
 ### Fixed
 
-- Requests to ARCA failed on Node 24+ (OpenSSL 3.5) with `dh key too small`: WSFE still negotiates TLS with a
-  1024-bit Diffie-Hellman key. The library now sends its requests through its own HTTPS agent with
-  `DEFAULT@SECLEVEL=1`, without touching the host application's global agent.
+- Requests to ARCA failed on Node 24+ (OpenSSL 3.5) with `write EPROTO ... dh key too small`: WSFE
+  (`servicios1.afip.gov.ar`) still negotiates TLS with a 1024-bit Diffie-Hellman key. The library now sends its
+  requests through its own HTTPS agent with `DEFAULT@SECLEVEL=1`, which accepts that key. Only the library's
+  requests to ARCA use this setting; the rest of your application's connections are not affected.
 
 ### Added
 
-- `httpsAgent` in the context, to use a custom HTTPS agent (proxies, custom TLS) for the requests to ARCA.
-- `getArcaHttpsAgent` and `ARCA_TLS_CIPHERS` exports.
+- `httpsAgent` option in the `Context`, to send the requests to ARCA through your own HTTPS agent (proxy,
+  custom TLS settings).
+- `getArcaHttpsAgent()` and `ARCA_TLS_CIPHERS` exports, to build an agent on top of the library's defaults.
+
+### Changed
+
+- The library no longer uses Node's global HTTPS agent (`https.globalAgent`) for its requests. If you routed
+  ARCA traffic through a proxy by replacing or patching the global agent, pass that agent as `httpsAgent`
+  instead:
+
+  ```ts
+  const afip = new Afip({ ...context, httpsAgent: myProxyAgent });
+  ```
+
+  If your agent has to talk to ARCA on Node 24+, also set `ciphers: ARCA_TLS_CIPHERS` on it.
 
 ## 3.2.2 - 2024-06-19
 
