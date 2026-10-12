@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 3.3.0 - Unreleased
 
-Pre-release published as `3.3.0-rc.0` under the `next` dist-tag (`npm install @cafecafe/afip.ts@next`).
+Pre-release published under the `next` dist-tag (`npm install @cafecafe/afip.ts@next`). `3.3.0-rc.1` relaxes the new
+`axios` dependency to `^1.8.4` so installing it does not force an `axios` upgrade in your project.
 
 ### Fixed
 
