@@ -51,6 +51,7 @@ export class AfipService<T extends Client> {
   private async instanceSoapClient(): Promise<T> {
     const client = await SoapClientFacade.create<T>({
       wsdl: this._soapParams.wsdl,
+      httpsAgent: this.context.httpsAgent,
       options: {
         disableCache: true,
         forceSoap12Headers: this._soapParams.v12,
