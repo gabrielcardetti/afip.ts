@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 3.3.0 - Unreleased
+## 3.3.0 - 2026-10-16
 
-Pre-release published under the `next` dist-tag (`npm install @cafecafe/afip.ts@next`). `3.3.0-rc.1` relaxes the new
-`axios` dependency to `^1.8.4` so installing it does not force an `axios` upgrade in your project.
+Validated in production on Node 24 with `3.3.0-rc.1` (pre-releases `3.3.0-rc.0` and `3.3.0-rc.1` were published under
+the `next` dist-tag). The new `axios` dependency is `^1.8.4`, so upgrading does not force an `axios` upgrade in your
+project; avoid `3.3.0-rc.0`, which required `axios` `^1.20`.
 
 ### Fixed
 
